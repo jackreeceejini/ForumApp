@@ -8,11 +8,16 @@ def get_posts():
   db = psycopg2.connect(database=DBNAME)
   c = db.cursor()
   c.execute("select content, time from posts order by time desc")
-  return c.fetchall()
   db.close()
+  return c.fetchall()
+  
 
 def add_post(content):
   """Add a post to the 'database' with the current timestamp."""
-  
+  db = psycopg2.connect(database=DBNAME)
+  c = dp.cursor()
+  c.execute("insert into posts values ('%s')" % content)
+  db.commit()
+  db.close()
 
 
